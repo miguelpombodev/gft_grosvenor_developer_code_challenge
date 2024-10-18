@@ -3,13 +3,14 @@ namespace GFTGrovelorDeveloperCodeChallenge.Domain.Entities;
 public class Order
 {
     
-    public Order(string daytimeOrderCategory)
+    public Order(string daytimeOrderCategory, List<string> orderedDishes)
     {
         SetDaytimeOrderCategory(daytimeOrderCategory);
+        SetDishes(orderedDishes);
     }
     
-    public string DaytimeOrderCategory { get; set; } 
-    public List<int> Dishes { get; set; } = new List<int>();
+    public string DaytimeOrderCategory { get; private set; } 
+    public List<int> Dishes { get; private set; } = new List<int>();
 
     private void SetDaytimeOrderCategory(string daytimeOrderCategory)
     {
@@ -17,12 +18,24 @@ public class Order
         {
             "morning" => "morning",
             "evening" => "evening",
-            _ => throw new ArgumentException("Invalid daytime order category")
+            _ => throw new ApplicationException("Invalid daytime order category")
         };
     }
-
-    private string GetDaytimeOrderCategory()
+    
+    private void SetDishes(List<string> dishes)
     {
-        return DaytimeOrderCategory;
+        foreach (string daytimeDish in dishes)
+        {
+            if (int.TryParse(daytimeDish, out int parsedDaytimeDish))
+            {
+                Dishes.Add(parsedDaytimeDish);
+            }
+            else
+            {
+                throw new ApplicationException("Order needs to be comma separated list of numbers");
+            }
+        }
+        
+        Dishes.Sort();
     }
 }

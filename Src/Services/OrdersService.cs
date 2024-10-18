@@ -10,19 +10,12 @@ public class OrdersService : IOrdersService
         string daytimeDishCategory = unparsedOrder.Split(',').First().ToLower();
         List<string> daytimeDishes = unparsedOrder.Split(',').Skip(1).ToList();
 
-        var order = new Order(daytimeDishCategory);
-
-        foreach (string daytimeDish in daytimeDishes)
+        if (daytimeDishes.Count == 0)
         {
-            if (int.TryParse(daytimeDish, out int parsedDaytimeDish))
-            {
-                order.Dishes.Add(parsedDaytimeDish);
-            }
-            else
-            {
-                throw new ApplicationException("Order needs to be comma separated list of numbers");
-            }
+            throw new ApplicationException("error");
         }
+
+        var order = new Order(daytimeDishCategory, daytimeDishes);
 
         return order;
     }
