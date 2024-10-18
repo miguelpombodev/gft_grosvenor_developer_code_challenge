@@ -38,4 +38,26 @@ public class Order
         
         Dishes.Sort();
     }
+    
+    /// <summary>
+    /// Verifies if an object is an instance of Order, if it is, its needed to compare each property 
+    /// </summary>
+    /// <returns>Returns a boolean showing if all properties values are equal between compared objects.</returns>
+    public override bool Equals(object obj)
+    {
+        if (obj is not Order other)
+            return false;
+
+        return DaytimeOrderCategory == other.DaytimeOrderCategory &&
+               Dishes.SequenceEqual(other.Dishes);
+    }
+
+    /// <summary>
+    /// Generates a hash for the object based in its properties
+    /// </summary>
+    /// <returns>Returns a single hash code.</returns>
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(DaytimeOrderCategory, Dishes);
+    }
 }

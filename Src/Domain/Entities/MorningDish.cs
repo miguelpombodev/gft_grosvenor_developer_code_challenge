@@ -2,10 +2,10 @@ namespace GFTGrovelorDeveloperCodeChallenge.Domain.Entities;
 
 public class MorningDish : Dish
 {
-    public MorningDish(string dishName)
+    public MorningDish(string dishName, int count = 0)
     {
         DishName = dishName;
-        Count = 0;
+        Count = count;
     }
 
     public override bool IsMultipleAllowed(int dishId)
