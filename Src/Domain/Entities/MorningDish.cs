@@ -16,4 +16,17 @@ public class MorningDish : Dish
             _ => false
         };
     }
+    
+    public override bool Equals(object obj)
+    {
+        if (obj is not MorningDish other)
+            return false;
+
+        return Count == other.Count && DishName == other.DishName;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Count, DishName);
+    }
 }
