@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  gft-challenge-backend:
+    build:
+      context: .
+    container_name: gft-challenge-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+    networks:
+      - gft-challenge-network
+      
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - gft-challenge-network  
+      
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+    networks:
+      - gft-challenge-network
+        
+networks:
+    gft-challenge-network:
+      driver: bridge

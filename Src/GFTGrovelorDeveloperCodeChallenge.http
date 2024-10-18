@@ -1,0 +1,6 @@
+@GFTGrovelorDeveloperCodeChallenge_HostAddress = http://localhost:5037
+
+GET {{GFTGrovelorDeveloperCodeChallenge_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
